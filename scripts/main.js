@@ -419,7 +419,7 @@ window.onload = function () {
 
 
 
-
+    // this is the main enemy class
     // enemy random class , random postion and then goes to center
     // enemy(distance, speed, base_image) the inicial position is random
 
