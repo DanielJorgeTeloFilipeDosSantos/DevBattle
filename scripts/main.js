@@ -168,7 +168,8 @@ window.onload = function () {
                     enemy_typeError_1.paint();
                     enemy_bear_1.paint();
                     enemy_sheep_1.paint();
-                    enemy_sheep_2.paint();
+                    enemy_js_1.paint();
+                    enemy_js_2.paint();
                     resetMouseState()
                     break;
                 case 3: // second level junior developer
@@ -378,8 +379,6 @@ window.onload = function () {
                 this.offset_top = this.posy  + 0;
                 this.offset_bottom = this.posy  + 70;
 
-                console.log('globalMousePosition2', globalMousePosition)
-                console.log('this.offset_top: ', this.offset_top,'this.offset_bottom: ',this.offset_bottom,'posx: ',this.posx,'posy: ',this.posy)
 
                 if (globalMousePosition.y >= this.offset_top && globalMousePosition.y <= this.offset_bottom) {
                     console.log('died')
@@ -439,6 +438,8 @@ window.onload = function () {
             this.offset_top = this.posy + 31;
             this.offset_bottom = this.posy + 131;
 
+           
+
             this.isAlive = true;
         }
 
@@ -447,7 +448,8 @@ window.onload = function () {
         }
 
         addingForAnimating(){
-            //this.posx +=1;
+            this.posx +=1.6;
+            this.posy +=1.6;
         }
 
         getShoot() {
@@ -467,11 +469,12 @@ window.onload = function () {
 
                     this.isAlive = false;
                 } else {
-                    ctx.drawImage(base_image5, this.posx, this.posy, width / 7, height / 7);
+                    ctx.drawImage(base_image6, this.posx, this.posy, width / 7, height / 7);
                 }
             }
         }
         paint() {
+            this.addingForAnimating();
             this.getShoot();
         }
 
@@ -492,10 +495,9 @@ window.onload = function () {
     let enemy_typeError_1 = new enemy_typeError()
     let enemy_bear_1 = new enemy_bear()
     let enemy_sheep_1 = new enemy_sheep()
-    let enemy_sheep_2 = new enemy_main(0,0)
+    let enemy_js_1 = new enemy_main(-600,-600)
+    let enemy_js_2 = new enemy_main(-1000,-1000)
     let main_game_class = new game()
-
-    console.log('console dev', dev1)
 
     //level1_sound.play();    only after the user interacts with the page is that you can play music chrome 66
 
