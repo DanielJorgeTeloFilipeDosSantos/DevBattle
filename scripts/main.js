@@ -3,7 +3,7 @@
 
 
 // works in radiansssss and not degreessss
-// function degreeConverter(degree, distance){      
+// function radianConverter(radian, distance){      
 
 //     console.log(degree)
   
@@ -15,7 +15,7 @@
   
 //   }
   
-//   degreeConverter(0,1)
+//   radianConverter(0,1)
 
 
 
@@ -107,8 +107,8 @@ window.onload = function () {
     }
 
     function resetMouseState() {
-        globalMousePosition.x = 900;
-        globalMousePosition.y = 900;
+        globalMousePosition.x = 50000;
+        globalMousePosition.y = 50000;
     }
 
     onCanvasClickGetMousePosition();
@@ -159,12 +159,16 @@ window.onload = function () {
                     enemy_404_1.posy += 0.9;
                     enemy_typeError_1.posy += 0.9;
                     enemy_bear_1.posx += 0.8;
+                    enemy_sheep_1.posx -= 0.5;
+                    enemy_sheep_1.posy -= 0.5;
                     ctx.clearRect(0, 0, width, height)
 
                     dev1.paint();
                     enemy_404_1.paint();
                     enemy_typeError_1.paint();
                     enemy_bear_1.paint();
+                    enemy_sheep_1.paint();
+                    enemy_sheep_2.paint();
                     resetMouseState()
                     break;
                 case 3: // second level junior developer
@@ -232,7 +236,7 @@ window.onload = function () {
                 this.offset_top = this.posy + 31;
                 this.offset_bottom = this.posy + 131;
 
-                console.log('globalMousePosition2', globalMousePosition)
+                // console.log('globalMousePosition2', globalMousePosition)
 
                 if (globalMousePosition.y >= this.offset_top && globalMousePosition.y <= this.offset_bottom) {
                     console.log('died')
@@ -241,6 +245,11 @@ window.onload = function () {
                 } else {
                     ctx.drawImage(base_image2, width / 3, this.posy, width / 4, height / 4);
                 }
+            }
+        }
+        reachTheCenter(){
+            if(posx >= 300 && posx <= 400 ) {
+                // the game shows the death menu
             }
         }
         paint() {
@@ -275,7 +284,7 @@ window.onload = function () {
                 this.offset_top = this.posy + 31;
                 this.offset_bottom = this.posy + 131;
 
-                console.log('globalMousePosition2', globalMousePosition)
+                // console.log('globalMousePosition2', globalMousePosition)
 
                 if (globalMousePosition.y >= this.offset_top && globalMousePosition.y <= this.offset_bottom) {
                     console.log('died')
@@ -321,8 +330,8 @@ window.onload = function () {
                 this.offset_top = this.posy + 300;
                 this.offset_bottom = this.posy + 370;
 
-                console.log('globalMousePosition2', globalMousePosition)
-                console.log('this.offset_top', this.offset_top,'this.offset_bottom',this.offset_bottom,'posx',this.posx,'posy',this.posy)
+                // console.log('globalMousePosition2', globalMousePosition)
+                // console.log('this.offset_top', this.offset_top,'this.offset_bottom',this.offset_bottom,'posx',this.posx,'posy',this.posy)
 
                 if (globalMousePosition.y >= this.offset_top && globalMousePosition.y <= this.offset_bottom) {
                     console.log('died')
@@ -339,27 +348,50 @@ window.onload = function () {
 
     }
 
-    //---------------------------------------------------------------
+    //------------------------- class enemy sheep --------------------------------------
 
-    class enemy4 {
-        constructor() {
-            this.health = 5,
-                this.posx = 0;
-            this.posy = 0;
-            this.offset_left = 2;
-            this.offset_right = 2;
-            this.offset_top = 2;
-            this.offset_bottom = 2;
+    class enemy_sheep {
+        constructor(posx, posy, offset_left, offset_right, offset_top, offset_bottom) {
+            this.health = 5
 
 
+            this.posx = 800;
+            this.posy = 800;
+            this.offset_left = 0;
+            this.offset_right = 0;
+            this.offset_top = this.posy + 31;
+            this.offset_bottom = this.posy + 131;
+
+            this.isAlive = true;
         }
 
         teste() {
             console.log('teste passou')
         }
 
+        getShoot() {
+
+            if (this.isAlive === false) {
+                this.offset_top = 900;
+                this.offset_bottom = 900;
+            } else {
+                this.offset_top = this.posy  + 0;
+                this.offset_bottom = this.posy  + 70;
+
+                console.log('globalMousePosition2', globalMousePosition)
+                console.log('this.offset_top: ', this.offset_top,'this.offset_bottom: ',this.offset_bottom,'posx: ',this.posx,'posy: ',this.posy)
+
+                if (globalMousePosition.y >= this.offset_top && globalMousePosition.y <= this.offset_bottom) {
+                    console.log('died')
+
+                    this.isAlive = false;
+                } else {
+                    ctx.drawImage(base_image5, this.posx, this.posy, width / 7, height / 7);
+                }
+            }
+        }
         paint() {
-            ctx.drawImage(base_image5, 200, 100, width / 5, height / 5);
+            this.getShoot();
         }
 
     }
@@ -383,7 +415,73 @@ window.onload = function () {
 
     }
 
-    
+    //--------------------------- enemy main class  ------------------------------------
+
+
+
+
+    // enemy random class , random postion and then goes to center
+    // enemy(distance, speed, base_image) the inicial position is random
+
+
+
+
+
+    class enemy_main {
+        constructor(posx, posy) {
+            this.health = 5
+
+
+            this.posx = posx;
+            this.posy = posy;
+            this.offset_left = 0;
+            this.offset_right = 0;
+            this.offset_top = this.posy + 31;
+            this.offset_bottom = this.posy + 131;
+
+            this.isAlive = true;
+        }
+
+        teste() {
+            console.log('teste passou')
+        }
+
+        addingForAnimating(){
+            //this.posx +=1;
+        }
+
+        getShoot() {
+
+            if (this.isAlive === false) {
+                this.offset_top = 900;
+                this.offset_bottom = 900;
+            } else {
+                this.offset_top = this.posy  + 0;
+                this.offset_bottom = this.posy  + 70;
+
+                console.log('globalMousePosition2', globalMousePosition)
+                console.log('this.offset_top: ', this.offset_top,'this.offset_bottom: ',this.offset_bottom,'posx: ',this.posx,'posy: ',this.posy)
+
+                if (globalMousePosition.y >= this.offset_top && globalMousePosition.y <= this.offset_bottom) {
+                    console.log('died')
+
+                    this.isAlive = false;
+                } else {
+                    ctx.drawImage(base_image5, this.posx, this.posy, width / 7, height / 7);
+                }
+            }
+        }
+        paint() {
+            this.getShoot();
+        }
+
+    }
+
+
+
+
+
+
 
     //---------------------------------------------------------------
 
@@ -393,7 +491,8 @@ window.onload = function () {
     let enemy_404_1 = new enemy_404(posy)
     let enemy_typeError_1 = new enemy_typeError()
     let enemy_bear_1 = new enemy_bear()
-    let enemy_sheep = new enemy4()
+    let enemy_sheep_1 = new enemy_sheep()
+    let enemy_sheep_2 = new enemy_main(0,0)
     let main_game_class = new game()
 
     console.log('console dev', dev1)
